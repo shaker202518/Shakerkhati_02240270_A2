@@ -96,7 +96,7 @@ class TriviaPursuitGame:
             "History": [
                 ("Who is the first king of Bhutan?", "a", ["Sir Ugyen Wangchuck", "Jigme Singye Wangchuck", "Jigme Dorji Wangchuck"]),
                 ("When did Bhutan join the UN?", "b", ["1961", "1971", "1981"]),
-                ("Who introduced democracy in Bhutan?", "c", ["Ugyen Wangchuck", "Jigme Dorji Wangchuck", "Jigme Singye Wangchuck"]),
+                ("Who introduced democracy in Bhutan?", "c", ["Druck Gyalpo Ugyen Wangchuck", "Druk Gyalpo Jigme Dorji Wangchuck", " Druk Gyalpo Jigme Singye Wangchuck"]),
                 ("Which dynasty rules Bhutan?", "a", ["Wangchuck", "Namgyal", "Chogyal"])
             ],
             "Science": [

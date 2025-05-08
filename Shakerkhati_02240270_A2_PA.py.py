@@ -49,13 +49,17 @@ class GuessNumberGame:
         guess = None
         attempts = 0
         while guess != number_to_guess:
-            guess = int(input("Guess a number between 1 and 100: "))
-            attempts += 1
-            if guess < number_to_guess:
-                print("Too low!")
-            elif guess > number_to_guess:
-                print("Too high!")
-        score = max(10 - attempts, 0)
+            try:
+                guess = int(input("Guess a number between 1 and 100: "))
+                attempts += 1
+                if guess < number_to_guess:
+                    print("Too low!")
+                elif guess > number_to_guess:
+                    print("Too high!")
+            except ValueError:
+                print("Please enter a valid number.")
+                continue
+        score = max(100 - attempts, 0)
         print(f"Congratulations! You guessed the number in {attempts} attempts. (+{score} points)")
         self.manager.overall_score["guess_number"] += score
 
@@ -118,6 +122,9 @@ class TriviaPursuitGame:
         self.manager.overall_score["trivia"] += score
 
 class PokemonCardBinderManager:
+    CARDS_PER_PAGE = 64
+    BINDER_SIZE = 1025  # Maximum Pokedex number
+
     def __init__(self):
         self.binder = {}
 
@@ -147,6 +154,9 @@ class PokemonCardBinderManager:
     def add_card(self):
         try:
             number = int(input("Enter Pokedex number (1-1025): "))
+            if number < 1 or number > self.BINDER_SIZE:
+                print("Invalid Pokedex number. Must be between 1 and 1025.")
+                return
             if number in self.binder:
                 print("This card is already in the binder.")
             else:
@@ -167,8 +177,22 @@ class PokemonCardBinderManager:
         if not self.binder:
             print("The binder is empty.")
         else:
-            for num in sorted(self.binder):
-                print(self.binder[num])
+            output = ["Current Binder Contents:\n------------------------"]
+            for number in sorted(self.binder):
+                index = list(self.binder.keys()).index(number)
+                page = (index // self.CARDS_PER_PAGE) + 1
+                pos_in_page = index % self.CARDS_PER_PAGE
+                row = (pos_in_page // 8) + 1
+                col = (pos_in_page % 8) + 1
+                output.append(f"Pokedex #{number}:\n  Page: {page}\n  Position: Row {row}, Column {col}")
+            output.append("------------------------")
+            total = len(self.binder)
+            percent = round((total / self.BINDER_SIZE) * 100, 1)
+            output.append(f"Total cards in binder: {total}")
+            output.append(f"% completion: {percent}%")
+            if total == self.BINDER_SIZE:
+                output.append("You have caught them all!!")
+            print("\n".join(output))
 
 if __name__ == "__main__":
     GameManager().run()

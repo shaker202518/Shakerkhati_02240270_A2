@@ -58,7 +58,7 @@ def main():
 
         if choice == "1":
             try:
-                number = int(input("Enter Pokedex number: "))
+                number = int(input("Enter Pokedex number(1-1025): "))
                 print(binder.add_card(number))
             except ValueError:
                 print("Please enter a valid number.")
